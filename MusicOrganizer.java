@@ -172,37 +172,32 @@ public class MusicOrganizer
             addTrack(track);
         }
     }
+    
     /**
-     * Randomize all tracks so that they will be in a random order
+     * Play all tracks only once, in a random order.
+     * Uses a Collections util
      */
-    public void randomAllTracks()
-    {
-        ArrayList<Track> randomList = buildRandomList();
-        playList(randomList);
-    }
-    /**
-     * @return returns the Randomized list so that it can be played 
-     */
-    private ArrayList<Track> buildRandomList() 
-   {
-       ArrayList<Track> randomList = new ArrayList<Track>(this.tracks);
-       Collections.shuffle(randomList);
+     public void randomPlayAll()
+     {
+         ArrayList<Track> leftToPlay = new ArrayList<Track>(tracks);
+         Collections.shuffle(leftToPlay);
+         for(Track t : leftToPlay)
+         {
+             player.playSample(t.getFilename());
+         }
 
-       return randomList;
-   }
-   
-   /**
-    * Plays the randomized playlist 
-    * @param playList
-    */
-   public void playList(ArrayList<Track> playList)
-   {
-       if(playList.size() > 0)
-       {
-        for(Track track : playList)
-        {
-            player.startPlaying(track.getFilename());
-        }
-       }
-  }
+     }
+     
+     /** public void randomPlayAll
+     *{
+         *Random rand = new Random();
+         *ArrayList<Track> leftToPlay = new ArrayList<Track>(tracks);
+         *while(leftToPlay.size() > 0)
+         *{
+             *int index = rand.nextInt(leftToPlay.size());
+             *Track t = leftToPlay.remove(index);
+             *player.playSample(t.getFilename());
+         *}
+     *}
+     **/
 }
